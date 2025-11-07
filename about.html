@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lolpro | Portfolio</title>
+  <link rel="icon" href="assets/favicon.ico" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Satoshi", sans-serif;
+      color: #fff;
+      cursor: url("assets/cursor.webp") 16 16, auto;
+    }
+
+    body {
+      background: url("assets/bg.webp") center/cover no-repeat fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* TV flicker effect */
+    body::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(3px);
+      animation: tv 2s infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes tv {
+      0% {
+        opacity: 0.2;
+      }
+
+      100% {
+        opacity: 0.4;
+      }
+    }
+
+    /* Basic animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes popOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+    }
+
+    @keyframes overlayIn {
+      from {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        opacity: 0;
+      }
+
+      to {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(6px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes overlayOut {
+      from {
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(6px);
+        opacity: 1;
+      }
+
+      to {
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0px);
+        opacity: 0;
+      }
+    }
+
+    /* Main container */
+    .container {
+      z-index: 2;
+      background: rgba(29, 29, 56, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 40px 30px;
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      margin-bottom: 20px;
+      animation: popIn 1s ease;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+      text-shadow: 0 0 10px #6a5acd, 0 0 20px #7b68ee;
+      transition: 0.3s;
+      animation: fadeIn 1.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+
+    p.tagline {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 15px;
+      animation: fadeIn 1.3s ease;
+    }
+
+    .location {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      animation: fadeIn 1.4s ease;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .socials a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: 0.3s ease;
+      position: relative;
+      opacity: 0;
+      animation: popIn 0.6s ease forwards;
+    }
+
+    .socials a:nth-child(1) {
+      animation-delay: 0.3s;
+    }
+
+    .socials a:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    .socials a:nth-child(3) {
+      animation-delay: 0.5s;
+    }
+
+    .socials a:nth-child(4) {
+      animation-delay: 0.6s;
+    }
+
+    .socials a:nth-child(5) {
+      animation-delay: 0.7s;
+    }
+
+    .socials a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.1);
+    }
+
+    .socials svg {
+      width: 24px;
+      height: 24px;
+      color: #fff;
+    }
+
+    /* Tooltip for Discord */
+    .tooltip {
+      position: absolute;
+      bottom: 60px;
+      background: rgba(0, 0, 0, 0.88);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .socials a.discord:hover .tooltip {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hamburger menu button */
+    .menu-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 35px;
+      height: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      z-index: 12;
+      animation: popIn 0.5s;
+      transition: transform 0.3s ease;
+    }
+
+    .menu-btn div {
+      width: 100%;
+      height: 4px;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* Morph to X */
+    .menu-btn.active div:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 11px);
+    }
+
+    .menu-btn.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-btn.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -10px);
+    }
+
+    /* Overlay */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 11;
+    }
+
+    .menu-overlay.open {
+      display: flex;
+      animation: overlayIn 0.4s ease forwards;
+    }
+
+    .menu-overlay.closing {
+      animation: overlayOut 0.3s ease forwards;
+    }
+
+    /* Menu */
+    .menu {
+      background: rgba(20, 20, 40, 0.92);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: center;
+      width: 86%;
+      max-width: 420px;
+      transform-origin: center;
+      opacity: 0;
+    }
+
+    .menu.open {
+      animation: popIn 0.35s ease forwards;
+    }
+
+    .menu.closing {
+      animation: popOut 0.25s ease forwards;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: white;
+      font-size: 1.15rem;
+      transition: 0.18s;
+      opacity: 0;
+      transform: translateY(6px);
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .menu a:nth-child(1) {
+      animation-delay: 0.18s;
+    }
+
+    .menu a:nth-child(2) {
+      animation-delay: 0.26s;
+    }
+
+    .menu a:nth-child(3) {
+      animation-delay: 0.34s;
+    }
+
+    .menu a:nth-child(4) {
+      animation-delay: 0.42s;
+    }
+
+    .menu a:hover {
+      color: #a084ff;
+      text-shadow: 0 0 8px #a084ff;
+    }
+
+    @media (max-width: 600px) {
+      .avatar {
+        width: 90px;
+        height: 90px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .socials a {
+        width: 40px;
+        height: 40px;
+      }
+
+      .socials svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .menu {
+        width: 92%;
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Hamburger Button -->
+  <div class="menu-btn" id="menu-btn">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- Overlay Menu -->
+  <div class="menu-overlay" id="menu-overlay">
+    <nav class="menu" id="menu-box">
+      <a href="main.html" tabindex="0">Home</a>
+      <a href="/old_site" tabindex="0">Old Site</a>
+      <a href="minecraft.html" tabindex="0">Minecraft?</a>
+      <a href="about.html" tabindex="0">About this website</a>
+    </nav>
+  </div>
+
+  <!-- Profile Container -->
+  <div class="container">
+    <h1>About This Website</h1>
+    <p class="tagline">Very dumb website i made, something like a "link-in-bio" but a lot cooler i think.</p>
+    <p class="tagline">Website heavily inspired by <a target="_blank" rel="noopener noreferrer" href="https://guns.lol"> guns.lol</a>, backgound image is from the game <a target="_blank" rel="noopener noreferrer" href="https://www.omori-game.com/">OMORI</a>.</p>
+    <p class="tagline">Check out the <a target="_blank" rel="noopener noreferrer" href="https://github.com/lolprodoesstuff/website">source code</a>.</p>
+    <p class="tagline">Made with ctrl+c + ctrl+v by Lolpro.</p>
+    
+  </div>
+
+  <script>
+    // Discord copy
+const discordBtn = document.getElementById('discord-btn');
+if (discordBtn) {
+  discordBtn.addEventListener('click', e => {
+    e.preventDefault();
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText('lolprowashere').then(() => {
+        const t = document.getElementById('discord-tooltip');
+        if (t) {
+          t.textContent = 'Copied!';
+          setTimeout(() => t.textContent = 'lolprowashere', 1500);
+        }
+      });
+    }
+  });
+}
+
+
+    // Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const overlay = document.getElementById('menu-overlay');
+    const menuBox = document.getElementById('menu-box');
+
+    function openMenu() {
+      overlay.style.display = 'flex';
+      requestAnimationFrame(() => {
+        overlay.classList.add('open');
+        menuBox.classList.add('open');
+        menuBtn.classList.add('active');
+      });
+    }
+
+    function closeMenu() {
+      overlay.classList.remove('open');
+      menuBox.classList.remove('open');
+      overlay.classList.add('closing');
+      menuBox.classList.add('closing');
+      menuBtn.classList.remove('active');
+    }
+
+    menuBtn.addEventListener('click', () => {
+      if (menuBtn.classList.contains('active')) closeMenu(); else openMenu();
+    });
+
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeMenu(); });
+    overlay.addEventListener('animationend', e => {
+      if (e.animationName === 'overlayOut' && overlay.classList.contains('closing')) {
+        overlay.style.display = 'none';
+        overlay.classList.remove('closing');
+        menuBox.classList.remove('closing');
+      }
+    });
+    menuBox.addEventListener('animationend', e => {
+      if (e.animationName === 'popOut' && overlay.classList.contains('closing')) {
+        overlay.style.display = 'none';
+        overlay.classList.remove('closing');
+        menuBox.classList.remove('closing');
+      }
+    });
+  </script>
+</body>
+
+</html>
